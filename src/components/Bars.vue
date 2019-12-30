@@ -6,7 +6,8 @@
       v-bind:key="index"
       v-bind:style="{
         height: element.height,
-        width: width
+        width: width,
+        background: element.color
       }"
     ></div>
   </div>
@@ -17,7 +18,7 @@ export default {
   name: "Bars",
   props: {
     elements: Array,
-    width: String
+    width: String,
   },
 };
 </script>
@@ -36,7 +37,6 @@ export default {
 .bar {
   /* Position*/
   display: inline-block;
-  background-color: #6DB3A7;
   max-height: 500px;
   overflow: hidden;
 

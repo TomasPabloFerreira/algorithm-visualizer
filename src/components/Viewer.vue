@@ -47,11 +47,19 @@ export default {
       let rand;
       for (let i = 0; i < this.elementsCount; i++) {
         rand = Math.floor(Math.random() * 501);
-        newElements.push({ value: rand, height: rand + "px" });
+        newElements.push({
+          value: rand,
+          height: rand + "px",
+          color: "#6DB3A7"
+        });
       }
       // Delete this when height fixed
       if (newElements[16] != "undefined")
-        newElements[16] = { value: 500, height: 500 + "px" };
+        newElements[16] = {
+          value: 500,
+          height: 500 + "px",
+          color: "#6DB3A7"
+        };
 
       this.elements = newElements;
     },
@@ -74,6 +82,15 @@ export default {
       this.elements[a].height = this.elements[b].height;
       this.elements[b].height = auxHeight;
     },
+
+    changeColor: function(color, a) {
+      if (color == 0) {
+        this.elements[a].color = "#6DB3A7";
+      } else {
+        this.elements[a].color = "#B3745B";
+      }
+    },
+
     selectionSort: async function() {
       let arrayLength = this.elements.length;
       for (let i = 0; i < arrayLength; i++) {
@@ -83,8 +100,14 @@ export default {
             min = j;
           }
         }
+
+        this.changeColor(1, i);
+        this.changeColor(1, min);
+        await new Promise(r => setTimeout(r, 200));
         this.swap(i, min);
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, 200));
+        this.changeColor(0, i);
+        this.changeColor(0, min);
       }
     }
   },
@@ -99,7 +122,7 @@ export default {
   width: 90%;
   min-height: 500px;
   margin: 2% auto;
-  border: 3px solid #6db3a7;
+  border: 3px solid #b3745b;
   background-color: #ffcab5;
   position: relative;
   overflow-x: hidden;
