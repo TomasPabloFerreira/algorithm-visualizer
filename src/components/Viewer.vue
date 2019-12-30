@@ -15,6 +15,9 @@
       <option value="3">Otro</option>
     </select>
     <br /><br />
+    <label for="showIteration">Mostrar iteraciones</label>
+    <input type="checkbox" id="showIteration" v-model="showIteration"/>
+    <br /><br />
     <hr />
     <button @click="sort">Ordenar</button>
     <br />
@@ -36,9 +39,10 @@ export default {
 
   data: () => {
     return {
-      elementsCount: 20,
+      elementsCount: 200,
       elements: [],
-      sortingMethod: 0
+      sortingMethod: 0,
+      showIteration: true
     };
   },
   methods: {
@@ -101,42 +105,53 @@ export default {
       for (let i = 0; i < arrayLength; i++) {
         let min = i;
         for (let j = i + 1; j < arrayLength; j++) {
+          if (this.showIteration) {
+            this.changeColor(1, j);
+            await new Promise(r => setTimeout(r, 1));
+            this.changeColor(0, j);
+          }
           if (this.elements[j].value < this.elements[min].value) {
+            this.changeColor(1, j);
+            this.changeColor(0, min);
             min = j;
           }
-          this.changeColor(1, j);
-          await new Promise(r => setTimeout(r, 5));
-          this.changeColor(0, j);
         }
 
         this.changeColor(1, i);
         this.changeColor(1, min);
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, 50));
         this.swap(i, min);
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, 50));
         this.changeColor(0, i);
         this.changeColor(0, min);
       }
     },
     bubbleSort: async function() {
       let arrayLength = this.elements.length;
-      let sorted = false;
+      var sorted = false;
       while (!sorted) {
         sorted = true;
-        for (let i = 0; i < arrayLength; i++) {
-          this.changeColor(1, i);
-          await new Promise(r => setTimeout(r, 20));
-          this.changeColor(0, i);
-
+        for (let i = 0; i < arrayLength - 1; i++) {
           if (this.elements[i].value > this.elements[i + 1].value) {
             sorted = false;
             this.swap(i, i + 1);
           }
+          if (this.showIteration) {
+            this.changeColor(1, i);
+            await new Promise(r => setTimeout(r, 1));
+            this.changeColor(0, i);
+          } else if (i == arrayLength - 2) {
+            this.changeColor(1, i + 1);
+            await new Promise(r => setTimeout(r, 50));
+            this.changeColor(0, i + 1);
+          }
         }
+        arrayLength--;
       }
     }
   },
-  mounted: () => {}
+  mounted: () => {
+  }
 };
 </script>
 
