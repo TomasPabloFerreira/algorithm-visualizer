@@ -10,7 +10,7 @@
     <label for="sortingMethod" id="sortingMethodLabel">Algoritmo:</label>
     <select id="sortingMethod" v-model="sortingMethod">
       <option value="0">Selección</option>
-      <option value="1">Otro</option>
+      <option value="1">Burbuja</option>
       <option value="2">Otro</option>
       <option value="3">Otro</option>
     </select>
@@ -64,12 +64,17 @@ export default {
       this.elements = newElements;
     },
     sort: function() {
-      switch (this.sortingMethod) {
+      let sortingMethod = parseInt(this.sortingMethod);
+      switch (sortingMethod) {
         case 0:
           this.selectionSort();
           break;
+        case 1:
+          this.bubbleSort();
+          break;
         default:
-          alert("default");
+          alert("Método no disponible");
+          break;
       }
     },
     swap: function(a, b) {
@@ -108,6 +113,27 @@ export default {
         await new Promise(r => setTimeout(r, 200));
         this.changeColor(0, i);
         this.changeColor(0, min);
+      }
+    },
+    bubbleSort: async function() {
+      let arrayLength = this.elements.length;
+      let sorted = false;
+      while (!sorted) {
+        sorted = true;
+        for (let i = 0; i < arrayLength; i++) {
+          this.changeColor(1, i);
+          await new Promise(r => setTimeout(r, 200));
+          this.changeColor(0, i);
+
+          if (
+            this.elements[i] != "undefined" &&
+            this.elements[i].value > this.elements[i + 1].value
+          ) {
+            sorted = false;
+            this.swap(i, i + 1);
+          }
+        }
+        alert(sorted);
       }
     }
   },
