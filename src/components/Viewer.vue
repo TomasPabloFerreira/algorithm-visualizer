@@ -9,15 +9,16 @@
     <br />
     <label for="sortingMethod" id="sortingMethodLabel">Algoritmo:</label>
     <select id="sortingMethod" v-model="sortingMethod">
-      <option value="0">Burbuja</option>
+      <option value="0">Selección</option>
       <option value="1">Otro</option>
       <option value="2">Otro</option>
       <option value="3">Otro</option>
     </select>
-    <br><br><hr>
+    <br /><br />
+    <hr />
     <button @click="sort">Ordenar</button>
-    <br>
-    <hr>
+    <br />
+    <hr />
     <div id="bars">
       <bars :elements="elements" :width="100 / elements.length + '%'"> </bars>
     </div>
@@ -55,14 +56,36 @@ export default {
       this.elements = newElements;
     },
     sort: function() {
-      switch(this.sortingMethod){
-        case 0: this.bubbleSort();
-        break;
-        default: alert("default");
+      switch (this.sortingMethod) {
+        case 0:
+          this.selectionSort();
+          break;
+        default:
+          alert("default");
       }
     },
-    bubbleSort: function() {
-      alert("bubble sort");
+    swap: function(a, b) {
+      let auxValue = this.elements[a].value;
+      let auxHeight = this.elements[a].height;
+
+      this.elements[a].value = this.elements[b].value;
+      this.elements[b].value = auxValue;
+
+      this.elements[a].height = this.elements[b].height;
+      this.elements[b].height = auxHeight;
+    },
+    selectionSort: async function() {
+      let arrayLength = this.elements.length;
+      for (let i = 0; i < arrayLength; i++) {
+        let min = i;
+        for (let j = i + 1; j < arrayLength; j++) {
+          if (this.elements[j].value < this.elements[min].value) {
+            min = j;
+          }
+        }
+        this.swap(i, min);
+        await new Promise(r => setTimeout(r, 500));
+      }
     }
   },
   mounted: () => {}
@@ -76,8 +99,8 @@ export default {
   width: 90%;
   min-height: 500px;
   margin: 2% auto;
-  border: 3px solid #6DB3A7;
-  background-color: #FFCAB5;
+  border: 3px solid #6db3a7;
+  background-color: #ffcab5;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
