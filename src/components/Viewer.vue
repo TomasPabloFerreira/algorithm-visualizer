@@ -104,6 +104,9 @@ export default {
           if (this.elements[j].value < this.elements[min].value) {
             min = j;
           }
+          this.changeColor(1, j);
+          await new Promise(r => setTimeout(r, 5));
+          this.changeColor(0, j);
         }
 
         this.changeColor(1, i);
@@ -122,18 +125,14 @@ export default {
         sorted = true;
         for (let i = 0; i < arrayLength; i++) {
           this.changeColor(1, i);
-          await new Promise(r => setTimeout(r, 200));
+          await new Promise(r => setTimeout(r, 20));
           this.changeColor(0, i);
 
-          if (
-            this.elements[i] != "undefined" &&
-            this.elements[i].value > this.elements[i + 1].value
-          ) {
+          if (this.elements[i].value > this.elements[i + 1].value) {
             sorted = false;
             this.swap(i, i + 1);
           }
         }
-        alert(sorted);
       }
     }
   },
