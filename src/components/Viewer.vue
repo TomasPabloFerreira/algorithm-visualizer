@@ -1,29 +1,72 @@
 <template>
   <div class="viewer">
-    <h1>Visor de algoritmos de ordenamiento</h1>
-    <label for="elementsCount">Cantidad de elementos: </label>
-    <br />
-    <input type="number" id="elementsCount" v-model="elementsCount" />
-    <button @click="generateRandomElements">Generar</button>
-    <br />
-    <br />
-    <label for="sortingMethod" id="sortingMethodLabel">Algoritmo:</label>
-    <select id="sortingMethod" v-model="sortingMethod">
-      <option value="0">Selección</option>
-      <option value="1">Burbuja</option>
-      <option value="2">Inserción</option>
-      <option value="3">Otro</option>
-    </select>
-    <br /><br />
-    <label for="showIteration">Mostrar iteraciones</label>
-    <input type="checkbox" id="showIteration" v-model="showIteration" />
-    <br /><br />
-    <hr />
-    <button @click="sort">Ordenar</button>
-    <br />
-    <hr />
-    <div id="bars">
-      <bars :elements="elements" :width="100 / elements.length + '%'"> </bars>
+    <div class="conteiner-fluid">
+      <form action="#">
+        <div class="form-row">
+          <div class="form-group col-md-4 offset-4">
+            <label for="elementsCount">Cantidad de elementos: </label>
+            <input
+              type="number"
+              id="elementsCount"
+              v-model="elementsCount"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <button
+              @click="generateRandomElements"
+              class="btn btn-primary mb-2"
+            >
+              Generar
+            </button>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="form-row">
+          <div class="form-group col-md-4 col-sm-12 offset-4">
+            <label for="sortingMethod" id="sortingMethodLabel"
+              >Algoritmo:</label
+            >
+            <select
+              id="sortingMethod"
+              v-model="sortingMethod"
+              class="form-control"
+            >
+              <option value="0">Selección</option>
+              <option value="1">Burbuja</option>
+              <option value="2">Inserción</option>
+              <option value="3">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                id="showIteration"
+                v-model="showIteration"
+                class="form-check-label mr-2"
+              />
+              <label for="showIteration" class="form-check-label"
+                >Mostrar iteraciones</label
+              >
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <button @click="sort" class="btn btn-success mt-3">Ordenar</button>
+
+      <div id="bars">
+        <bars :elements="elements" :width="100 / elements.length + '%'"> </bars>
+      </div>
     </div>
   </div>
 </template>
@@ -58,12 +101,19 @@ export default {
         });
       }
       // Delete this when height fixed
-      if (newElements[16] != "undefined")
+      if (newElements[16] != "undefined" && newElements[16] != null) {
         newElements[16] = {
           value: 500,
           height: 500 + "px",
           color: "#6DB3A7"
         };
+      } else {
+        newElements[0] = {
+          value: 500,
+          height: 500 + "px",
+          color: "#6DB3A7"
+        };
+      }
 
       this.elements = newElements;
     },
@@ -159,7 +209,6 @@ export default {
         let tmpValue = this.elements[i].value;
         let tmpHeight = this.elements[i].height;
         while (j >= 0 && this.elements[j].value > tmpValue) {
-          
           if (this.showIteration) {
             this.changeColor(1, j);
             await new Promise(r => setTimeout(r, 1));
