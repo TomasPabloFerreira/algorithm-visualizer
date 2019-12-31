@@ -11,12 +11,12 @@
     <select id="sortingMethod" v-model="sortingMethod">
       <option value="0">Selección</option>
       <option value="1">Burbuja</option>
-      <option value="2">Otro</option>
+      <option value="2">Inserción</option>
       <option value="3">Otro</option>
     </select>
     <br /><br />
     <label for="showIteration">Mostrar iteraciones</label>
-    <input type="checkbox" id="showIteration" v-model="showIteration"/>
+    <input type="checkbox" id="showIteration" v-model="showIteration" />
     <br /><br />
     <hr />
     <button @click="sort">Ordenar</button>
@@ -75,6 +75,9 @@ export default {
           break;
         case 1:
           this.bubbleSort();
+          break;
+        case 2:
+          this.insertionSort();
           break;
         default:
           alert("Método no disponible");
@@ -148,10 +151,35 @@ export default {
         }
         arrayLength--;
       }
+    },
+    insertionSort: async function() {
+      let arrayLength = this.elements.length;
+      for (let i = 1; i < arrayLength; i++) {
+        let j = i - 1;
+        let tmpValue = this.elements[i].value;
+        let tmpHeight = this.elements[i].height;
+        while (j >= 0 && this.elements[j].value > tmpValue) {
+          
+          if (this.showIteration) {
+            this.changeColor(1, j);
+            await new Promise(r => setTimeout(r, 1));
+            this.changeColor(0, j);
+          }
+
+          this.elements[j + 1].value = this.elements[j].value;
+          this.elements[j + 1].height = this.elements[j].height;
+          j--;
+        }
+        this.elements[j + 1].value = tmpValue;
+        this.elements[j + 1].height = tmpHeight;
+
+        this.changeColor(1, j + 1);
+        await new Promise(r => setTimeout(r, 50));
+        this.changeColor(0, j + 1);
+      }
     }
   },
-  mounted: () => {
-  }
+  mounted: () => {}
 };
 </script>
 
