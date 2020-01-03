@@ -3,7 +3,8 @@
     <div class="conteiner-fluid">
       <form action="#">
         <div class="form-row">
-          <div class="form-group col-md-4 offset-4">
+          <div class="col-md-3 col-sm-2 col-1"></div>
+          <div class="form-group col-md-6 col-sm-8 col-10">
             <label for="elementsCount">Cantidad de elementos: </label>
             <input
               type="number"
@@ -12,6 +13,7 @@
               class="form-control"
             />
           </div>
+          <div class="col-md-3 col-sm-2 col-1"></div>
         </div>
 
         <div class="form-row">
@@ -28,7 +30,8 @@
         <hr />
 
         <div class="form-row">
-          <div class="form-group col-md-4 col-sm-12 offset-4">
+          <div class="col-md-3 col-sm-2 col-1"></div>
+          <div class="form-group col-md-6 col-sm-8 col-10">
             <label for="sortingMethod" id="sortingMethodLabel"
               >Algoritmo:</label
             >
@@ -43,6 +46,7 @@
               <option value="3">Otro</option>
             </select>
           </div>
+          <div class="col-md-3 col-sm-2 col-1"></div>
         </div>
 
         <div class="form-row">
